@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateRequestLang {
 
-    private String kursAd;
+    private String kursAd; //marka oluştururken ad vermem yeterli
 }

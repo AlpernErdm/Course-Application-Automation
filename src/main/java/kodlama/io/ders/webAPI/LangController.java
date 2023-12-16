@@ -32,7 +32,6 @@ public class LangController {
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable int id) {
-
         return programmingLangService.delete(id);
     }
 

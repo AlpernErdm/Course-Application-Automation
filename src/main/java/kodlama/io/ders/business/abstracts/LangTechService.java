@@ -9,7 +9,7 @@ import java.util.List;
 public interface LangTechService {
     List<GetAllLangTechResponse> getAll();
     CreateRequestLangTech getById(int id);
-    void add(CreateRequestLangTech createLangTechRequest, ProgrammingLang programmingLang) throws Exception;
+    void add(CreateRequestLangTech createLangTechRequest) throws Exception;
     void delete(int id);
     void update(int id, CreateRequestLangTech createLangTechRequest, ProgrammingLang programmingLang) throws Exception;
 }

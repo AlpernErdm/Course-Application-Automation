@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface ProgrammingLangService {
-        List<GetAllLangResponse> getall();
-        void add(CreateRequestLang createRequestLang ) throws Exception;
+        List<GetAllLangResponse> getall(); //id/name'e sahip list döndürüyorum
+        void add(CreateRequestLang createRequestLang ) throws Exception; //add yaparken sadece kursAd ile ekliyorum
+        //id zaten auto-increment
         String update(int id,UpdateProgrammingLanguageRequest updateProgrammingLanguageRequest);
         String delete(int id);
         void getById(int id);

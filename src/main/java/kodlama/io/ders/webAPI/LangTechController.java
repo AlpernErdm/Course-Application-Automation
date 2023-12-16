@@ -20,9 +20,15 @@ public class LangTechController {
         return langTechService.getAll();
     }
     @PostMapping("/add")
-    public void add(@RequestBody CreateRequestLangTech createRequestLangTech, ProgrammingLang programmingLang) throws Exception {
-        langTechService.add(createRequestLangTech,programmingLang);
+    public void add(@RequestBody CreateRequestLangTech createRequestLangTech) throws Exception {
+        langTechService.add(createRequestLangTech);
     }
-
-
+    @PutMapping("/update/{id}")
+    public void update(@PathVariable int id, @RequestBody CreateRequestLangTech  createRequestLangTech,ProgrammingLang programmingLang) throws Exception {
+    langTechService.update(id,createRequestLangTech,programmingLang);
+    }
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable(value="id") int id){
+        langTechService.delete(id);
+    }
 }
