@@ -1,56 +1,43 @@
 package kodlama.io.ders.business.concretes;
 
 import kodlama.io.ders.business.abstracts.LangTechService;
+import kodlama.io.ders.business.core.utilities.mapper.ModelMapperService;
 import kodlama.io.ders.business.requests.CreateRequestLangTech;
+import kodlama.io.ders.business.requests.GetByIdLangTechResponse;
+import kodlama.io.ders.business.requests.UpdateLangTechRequest;
 import kodlama.io.ders.business.responses.GetAllLangTechResponse;
 import kodlama.io.ders.dataAccess.abstracts.LangTechRepository;
 import kodlama.io.ders.dataAccess.abstracts.ProgrammingLangRepository;
 import kodlama.io.ders.entities.concretes.LangTech;
 import kodlama.io.ders.entities.concretes.ProgrammingLang;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LangTechManager implements LangTechService {
     private final ProgrammingLangRepository programmingLangRepository;
     private final LangTechRepository langTechRepository;
-
-    @Autowired
-    public LangTechManager(ProgrammingLangRepository programmingLangRepository, LangTechRepository langTechRepository) {
-        this.programmingLangRepository = programmingLangRepository;
-        this.langTechRepository = langTechRepository; //Db yi inject ettik
-    }
+    private final ModelMapperService modelMapperService;
 
     @Override
     public List<GetAllLangTechResponse> getAll() {
         List<LangTech> langTechList = langTechRepository.findAll();
 
-        List<GetAllLangTechResponse> getAllLangTechResponses = new ArrayList<>();
-
-        for (LangTech langTech : langTechList) {
-            GetAllLangTechResponse getAllLangTechResponse = new GetAllLangTechResponse();
-            getAllLangTechResponse.setId(langTech.getId());
-            getAllLangTechResponse.setLangTechName(langTech.getLangTechName());
-            getAllLangTechResponse.setProgrammingLang(langTech.getProgrammingLang().getKursAd());
-
-            getAllLangTechResponses.add(getAllLangTechResponse);
-        }
-
-
-        return getAllLangTechResponses;
+        return langTechList.stream()
+                .map(langTech -> modelMapperService.forResponse()
+                        .map(langTech, GetAllLangTechResponse.class)).toList();
 
     }
 
     @Override
-    public CreateRequestLangTech getById(int id) {
+    public GetByIdLangTechResponse getById(int id) {
 
-        CreateRequestLangTech responseItem = new CreateRequestLangTech();
-        responseItem.setLangTechName(langTechRepository.getReferenceById(id).getLangTechName());
-        return responseItem;
+       LangTech langTech=this.langTechRepository.findById(id).orElseThrow();
+       return this.modelMapperService.forResponse().map(langTech, GetByIdLangTechResponse.class);
     }
 
     @Override
@@ -69,11 +56,9 @@ public class LangTechManager implements LangTechService {
     }
 
     @Override
-    public void update(int id, CreateRequestLangTech createLangTechRequest, ProgrammingLang programmingLang) throws Exception {
-        LangTech langTech = new LangTech();
-        langTech.setLangTechName(langTech.getLangTechName());
-        langTech.setProgrammingLang(langTech.getProgrammingLang());
-        langTech.setId(langTech.getId());
-        langTechRepository.save(langTech);
+    public void update(@PathVariable int id, UpdateLangTechRequest updateLangTechRequest, ProgrammingLang programmingLang) throws Exception {
+       LangTech langTech=this.langTechRepository.findById(id).orElseThrow();
+       langTech.setLangTechName(updateLangTechRequest.getLangTechName());
+       this.langTechRepository.save(langTech);
     }
 }

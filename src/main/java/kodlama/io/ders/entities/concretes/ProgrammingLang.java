@@ -1,14 +1,13 @@
 package kodlama.io.ders.entities.concretes;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Table(name="langs") //db tablosu
-@Data //getter-setter oluşturur
+@Getter
+@Setter
 @AllArgsConstructor //parameter ctor
 @NoArgsConstructor //noparameter ctor
 @Entity //db varlığı olduğunu bildirir
