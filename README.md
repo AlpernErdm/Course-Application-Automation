@@ -8,7 +8,9 @@ Add new programming languages and frameworks
 List all programming languages and their frameworks
 Update existing programming language and framework entries
 Delete programming language or framework entries
-Technologies Used
+```
+```
+## Technologies Used
 Java: The main programming language used for the project
 Spring Boot: The framework used to simplify the development of the backend
 Spring Data JPA: For database interactions with ease using Entity Framework
